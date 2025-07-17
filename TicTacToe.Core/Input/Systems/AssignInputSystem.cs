@@ -55,6 +55,9 @@ public class AssignInputSystem(MouseController mouse, GamePadController pad1, Ga
                 _waitPool.Del(entity);
                 _controlPool.Add(entity, new(controlMethod));
 
+                EntityGenerator.NewEntity()
+                    .With(new PlayerSelectedInput());
+
                 SetOtherPlayerIfExists();
             }
         }
@@ -63,6 +66,9 @@ public class AssignInputSystem(MouseController mouse, GamePadController pad1, Ga
     private void SetOtherPlayerIfExists()
     {
         foreach (var entity in _noInputPlayerFilter)
+        {
             _waitPool.Add(entity);
+            break;
+        }
     }
 }

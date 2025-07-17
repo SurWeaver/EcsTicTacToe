@@ -1,4 +1,4 @@
-namespace TicTacToe.Core.Components;
+namespace TicTacToe.Core.Animation.Components;
 
 public struct RandomFrameTimer(double seconds)
 {

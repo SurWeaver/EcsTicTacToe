@@ -1,15 +1,14 @@
 using Leopotam.EcsLite;
 using Surtility.Drawing.Components;
 using Surtility.Extensions;
-using TicTacToe.Core.Components;
+using TicTacToe.Core.Animation.Components;
+using TicTacToe.Core.Utils;
 
-namespace TicTacToe.Core.Systems;
+namespace TicTacToe.Core.Animation.Systems;
 
-public class RandomizeFrameSystem
+public class AssignRandomFrameSystem
     : IEcsInitSystem, IEcsRunSystem
 {
-    private readonly Random random = new(DateTime.Now.GetHashCode());
-
     private EcsFilter _filter;
     private EcsPool<FrameCount> _countPool;
     private EcsPool<CurrentFrame> _framePool;
@@ -34,7 +33,7 @@ public class RandomizeFrameSystem
         {
             ref var count = ref _countPool.Get(entity).Count;
 
-            _framePool.Add(entity, new(random.Next(count)));
+            _framePool.Add(entity, new(Randomizer.GetInt(count)));
         }
     }
 }

@@ -3,6 +3,7 @@ using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Input;
 using Surtility.Extensions;
 using Surtility.Input;
+using Surtility.Tools;
 using TicTacToe.Core.Input.Components;
 using TicTacToe.Core.Input.Enums;
 using TicTacToe.Core.User.Components;

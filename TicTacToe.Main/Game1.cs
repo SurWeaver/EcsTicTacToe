@@ -134,9 +134,11 @@ public class TicTacToeGame : Game
             .Add(new CreateInputAssignScreenSystem(_inputIcons))
             .Add(new UpdateDeltaTimeSystem(_deltaTimer))
 
-            .Add(new AssignInputSystem(_mouseController, _gamepadControllerFirst, _gamepadControllerSecond))
-            .Add(new CleanAssignScreenSystem())
+            .Add(new CreateCursorSystem())
+            .Add(new UpdateCursorPositionSystem(_inputDevices, Window.ClientBounds.Size))
 
+            .Add(new AssignInputSystem(_inputDevices))
+            .Add(new CleanAssignScreenSystem())
 
             .Add(new AnimateSequentialFrameSystem())
             .Add(new RandomizeExistingFrameSystem())

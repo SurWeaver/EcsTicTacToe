@@ -34,9 +34,7 @@ public class TicTacToeGame : Game
 
     private readonly DeltaTimer _deltaTimer = new();
 
-    private readonly MouseController _mouseController = new();
-    private readonly GamePadController _gamepadControllerFirst = new(PlayerIndex.One);
-    private readonly GamePadController _gamepadControllerSecond = new(PlayerIndex.Two);
+    private readonly InputDevices _inputDevices = new();
 
     private Texture2D _inputIcons;
 
@@ -118,9 +116,7 @@ public class TicTacToeGame : Game
     {
         _deltaTimer.UpdateTime(gameTime);
 
-        _mouseController.Update();
-        _gamepadControllerFirst.Update();
-        _gamepadControllerSecond.Update();
+        _inputDevices.Update();
 
         _updateSystems.Run();
     }

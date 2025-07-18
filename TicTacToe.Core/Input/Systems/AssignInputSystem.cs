@@ -7,10 +7,11 @@ using Surtility.Tools;
 using TicTacToe.Core.Input.Components;
 using TicTacToe.Core.Input.Enums;
 using TicTacToe.Core.User.Components;
+using TicTacToe.Core.Utils;
 
 namespace TicTacToe.Core.Input.Systems;
 
-public class AssignInputSystem(MouseController mouse, GamePadController pad1, GamePadController pad2)
+public class AssignInputSystem(InputDevices device)
     : IEcsInitSystem, IEcsRunSystem
 {
     private readonly Rectangle WindowBounds = new(0, 0, 192, 192);
@@ -44,11 +45,11 @@ public class AssignInputSystem(MouseController mouse, GamePadController pad1, Ga
         {
             ControlMethod controlMethod = ControlMethod.Nothing;
 
-            if (mouse.IsJustPressed(MouseButton.Left) && WindowBounds.Contains(mouse.MousePosition))
+            if (device.Mouse.IsJustPressed(MouseButton.Left) && WindowBounds.Contains(device.Mouse.MousePosition))
                 controlMethod = ControlMethod.Mouse;
-            else if (pad1.IsJustPressed(Buttons.A))
+            else if (device.Pad1.IsJustPressed(Buttons.A))
                 controlMethod = ControlMethod.GamePad1;
-            else if (pad2.IsJustPressed(Buttons.A))
+            else if (device.Pad2.IsJustPressed(Buttons.A))
                 controlMethod = ControlMethod.GamePad2;
 
             if (controlMethod != ControlMethod.Nothing)

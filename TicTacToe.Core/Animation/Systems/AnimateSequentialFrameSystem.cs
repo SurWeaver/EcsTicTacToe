@@ -1,7 +1,6 @@
 using Leopotam.EcsLite;
 using Surtility.Drawing.Components;
-using Surtility.Extensions;
-using Surtility.Timing.Components;
+using Surtility.Timing;
 using TicTacToe.Core.Animation.Components;
 
 namespace TicTacToe.Core.Animation.Systems;
@@ -10,8 +9,6 @@ public class AnimateSequentialFrameSystem
     : IEcsInitSystem, IEcsRunSystem
 {
     private EcsFilter _filter;
-    private EcsFilter _deltaTimeFilter;
-    private EcsPool<DeltaTime> _deltaTimePool;
     private EcsPool<SequentialFrame> _sequentialFramePool;
     private EcsPool<CurrentFrame> _framePool;
     private EcsPool<FrameCount> _frameCountPool;
@@ -26,10 +23,6 @@ public class AnimateSequentialFrameSystem
             .Inc<CurrentFrame>()
             .End();
 
-        _deltaTimeFilter = world.Filter<DeltaTime>()
-            .End();
-
-        _deltaTimePool = world.GetPool<DeltaTime>();
         _sequentialFramePool = world.GetPool<SequentialFrame>();
 
         _framePool = world.GetPool<CurrentFrame>();
@@ -39,12 +32,10 @@ public class AnimateSequentialFrameSystem
 
     public void Run(IEcsSystems systems)
     {
-        var deltaTime = _deltaTimeFilter.GetSingleEntityComponent(_deltaTimePool);
-
         foreach (var entity in _filter)
         {
             ref var sequentialFrame = ref _sequentialFramePool.Get(entity);
-            sequentialFrame.CurrentSeconds += deltaTime.Seconds;
+            sequentialFrame.CurrentSeconds += DeltaTime.Seconds;
 
             if (sequentialFrame.CurrentSeconds >= sequentialFrame.SecondsToSwitch)
             {

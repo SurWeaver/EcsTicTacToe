@@ -1,6 +1,6 @@
 using Leopotam.EcsLite;
 using Surtility.Drawing.Components;
-using Surtility.Timing.Components;
+using Surtility.Timing;
 using TicTacToe.Core.Animation.Components;
 using TicTacToe.Core.Utils;
 
@@ -11,7 +11,6 @@ public class RandomizeExistingFrameSystem
 {
     private EcsFilter _timerFilter;
     private EcsFilter _filter;
-    private EcsPool<DeltaTime> _deltaTimePool;
     private EcsPool<RandomFrameTimer> _randomTimePool;
     private EcsPool<CurrentFrame> _framePool;
     private EcsPool<FrameCount> _countPool;
@@ -22,7 +21,6 @@ public class RandomizeExistingFrameSystem
         var world = systems.GetWorld();
 
         _timerFilter = world.Filter<RandomFrameTimer>()
-            .Inc<DeltaTime>()
             .End();
 
         _filter = world.Filter<RandomFrame>()
@@ -31,7 +29,6 @@ public class RandomizeExistingFrameSystem
             .Inc<SpriteBorder>()
             .End();
 
-        _deltaTimePool = world.GetPool<DeltaTime>();
         _randomTimePool = world.GetPool<RandomFrameTimer>();
 
         _framePool = world.GetPool<CurrentFrame>();
@@ -44,10 +41,9 @@ public class RandomizeExistingFrameSystem
         var randomize = false;
         foreach (var entity in _timerFilter)
         {
-            ref var deltaTime = ref _deltaTimePool.Get(entity);
             ref var randomTime = ref _randomTimePool.Get(entity);
 
-            randomTime.CurrentSeconds += deltaTime.Seconds;
+            randomTime.CurrentSeconds += DeltaTime.Seconds;
             if (randomTime.CurrentSeconds >= randomTime.Seconds)
             {
                 randomize = true;

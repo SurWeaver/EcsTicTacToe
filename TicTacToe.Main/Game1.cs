@@ -13,9 +13,11 @@ using TicTacToe.Core.Animation.Components;
 using TicTacToe.Core.Animation.Systems;
 using TicTacToe.Core.Cell.Components;
 using TicTacToe.Core.Cell.Enums;
+using TicTacToe.Core.Cleaning.Systems;
 using TicTacToe.Core.Components;
 using TicTacToe.Core.Drawing.Components;
 using TicTacToe.Core.Drawing.Systems;
+using TicTacToe.Core.Events;
 using TicTacToe.Core.Input.Components;
 using TicTacToe.Core.Input.Systems;
 using TicTacToe.Core.User.Components;
@@ -150,6 +152,7 @@ public class TicTacToeGame : Game
             .Add(new AnimateSpritePositionSystem())
             .Add(new LoopTweenSystem<Vector2>())
             .Add(new DeleteTweenSystem())
+            .Add(new CleanEventSystem())
             .Init();
 
         _drawSystems

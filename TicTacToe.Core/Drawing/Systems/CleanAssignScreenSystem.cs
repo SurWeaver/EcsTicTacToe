@@ -24,12 +24,8 @@ public class CleanAssignScreenSystem
 
     public void Run(IEcsSystems systems)
     {
-        foreach (var eventEntity in _eventFilter)
-        {
-            _world.DelEntity(eventEntity);
-
+        if (_eventFilter.GetEntitiesCount() > 0)
             foreach (var uiEntity in _uiFilter)
                 _world.DelEntity(uiEntity);
-        }
     }
 }

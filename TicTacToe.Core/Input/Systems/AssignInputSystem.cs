@@ -4,6 +4,7 @@ using Microsoft.Xna.Framework.Input;
 using Surtility.Extensions;
 using Surtility.Input;
 using Surtility.Tools;
+using TicTacToe.Core.Events;
 using TicTacToe.Core.Input.Components;
 using TicTacToe.Core.Input.Enums;
 using TicTacToe.Core.User.Components;
@@ -58,6 +59,7 @@ public class AssignInputSystem(InputDevices device)
                 _controlPool.Add(entity, new(controlMethod));
 
                 EntityGenerator.NewEntity()
+                    .With(new EventMarker())
                     .With(new PlayerSelectedInput());
 
                 SetOtherPlayerIfExists();

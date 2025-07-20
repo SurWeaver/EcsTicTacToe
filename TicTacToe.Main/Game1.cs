@@ -8,6 +8,8 @@ using Surtility.Timing.Components;
 using Surtility.Timing.Systems;
 using Surtility.Timing.Tools;
 using Surtility.Tools;
+using Surtility.Tweening;
+using Surtility.Tweening.Components;
 using Surtility.Tweening.Systems;
 using TicTacToe.Core.Animation.Components;
 using TicTacToe.Core.Animation.Systems;
@@ -148,8 +150,12 @@ public class TicTacToeGame : Game
 
             .Add(new UpdateTweenTimeSystem())
             .Add(new UpdateTweenValueSystem<Vector2>(Vector2.Lerp))
-            .Add(new AnimateSpriteScaleSystem())
-            .Add(new AnimateSpritePositionSystem())
+            .Add(new UpdateTweenValueSystem<Color>(Color.Lerp))
+
+            .Add(new AnimateComponentSystem<SpriteScale, Vector2>(MapFunctions.SaveSpriteScale))
+            .Add(new AnimateComponentSystem<SpritePosition, Vector2>(MapFunctions.SaveSpritePosition))
+            .Add(new AnimateComponentSystem<SpriteColor, Color>(MapFunctions.SaveSpriteColor))
+
             .Add(new LoopTweenSystem<Vector2>())
             .Add(new DeleteTweenSystem())
             .Add(new CleanEventSystem())

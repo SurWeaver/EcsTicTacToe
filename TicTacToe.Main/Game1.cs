@@ -7,18 +7,10 @@ using Surtility.Drawing.Systems;
 using Surtility.Timing;
 using Surtility.Tools;
 using Surtility.Tweening.Systems;
-using Surtility.Utils;
-using TicTacToe.Core.Animation.Components;
 using TicTacToe.Core.Animation.Systems;
-using TicTacToe.Core.Cell.Components;
-using TicTacToe.Core.Cell.Enums;
-using TicTacToe.Core.Components;
-using TicTacToe.Core.Drawing.Components;
 using TicTacToe.Core.Drawing.Systems;
 using TicTacToe.Core.Events;
-using TicTacToe.Core.Input.Components;
 using TicTacToe.Core.Input.Systems;
-using TicTacToe.Core.User.Components;
 using TicTacToe.Core.Utils;
 
 namespace TicTacToe.Main;
@@ -64,47 +56,11 @@ public class TicTacToeGame : Game
     {
         _spriteBatch = new SpriteBatch(GraphicsDevice);
 
+        GameHelper.LoadGameTextures(Content);
+
         _inputIcons = Content.Load<Texture2D>("Textures/Buttons");
 
-        var gridTexture = Content.Load<Texture2D>("Textures/Grid");
-
-        var firstPlayerIcon = Content.Load<Texture2D>("Textures/Player1");
-        var secondPlayerIcon = Content.Load<Texture2D>("Textures/Player2");
-
-        EntityGenerator.NewEntity()
-            .With(new Grid())
-            .With(new CellSize(new(64, 64)))
-
-            .With(new Sprite(gridTexture))
-            .With(new SpritePosition())
-            .With(new SpriteColor(Color.Black))
-
-            .With(new FrameCount(3))
-            .With(new RandomFrame())
-            .End();
-            
-        EntityGenerator.NewEntity()
-            .With(new RandomFrameTimer(0.8));
-
-        var firstPlayerIsCircle = Randomizer.GetHalfChance();
-
-        var firstPlayerSign = firstPlayerIsCircle ? FigureSign.Circle : FigureSign.Cross;
-        var secondPlayerSign = firstPlayerIsCircle ? FigureSign.Cross : FigureSign.Circle;
-
-        var firstPlayer = EntityGenerator.NewEntity()
-            .With(new Player())
-            .With(new PlayerIcon(firstPlayerIcon))
-            .With(new Figure(firstPlayerSign))
-            .With(new WaitForInput())
-            .With(new SpriteColor(Color.Green))
-            .End();
-
-        var secondPlayer = EntityGenerator.NewEntity()
-            .With(new Player())
-            .With(new PlayerIcon(secondPlayerIcon))
-            .With(new Figure(secondPlayerSign))
-            .With(new SpriteColor(Color.PaleTurquoise))
-            .End();
+        GameHelper.InitializeGameEntities(Content);
 
         InitializeEcsSystems();
     }
@@ -137,6 +93,7 @@ public class TicTacToeGame : Game
             .Add(new CleanAssignScreenSystem())
 
             .Add(new AnimateSequentialFrameSystem())
+
             .Add(new RandomizeExistingFrameSystem())
             .Add(new AssignRandomFrameSystem())
 

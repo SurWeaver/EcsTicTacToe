@@ -3,10 +3,7 @@ using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Surtility.Drawing.Components;
 using Surtility.Drawing.Systems;
-using Surtility.Input;
-using Surtility.Timing.Components;
-using Surtility.Timing.Systems;
-using Surtility.Timing.Tools;
+using Surtility.Timing;
 using Surtility.Tools;
 using Surtility.Tweening;
 using Surtility.Tweening.Components;
@@ -35,8 +32,6 @@ public class TicTacToeGame : Game
     private EcsWorld _ecsWorld;
     private EcsSystems _updateSystems;
     private EcsSystems _drawSystems;
-
-    private readonly DeltaTimer _deltaTimer = new();
 
     private readonly InputDevices _inputDevices = new();
 
@@ -88,9 +83,8 @@ public class TicTacToeGame : Game
             .With(new FrameCount(3))
             .With(new RandomFrame())
             .End();
-
+            
         EntityGenerator.NewEntity()
-            .With(new DeltaTime())
             .With(new RandomFrameTimer(0.8));
 
         var firstPlayerIsCircle = Randomizer.GetHalfChance();
@@ -118,7 +112,7 @@ public class TicTacToeGame : Game
 
     protected override void Update(GameTime gameTime)
     {
-        _deltaTimer.UpdateTime(gameTime);
+        DeltaTime.UpdateTime(gameTime);
 
         _inputDevices.Update();
 
@@ -136,7 +130,6 @@ public class TicTacToeGame : Game
     {
         _updateSystems
             .Add(new CreateInputAssignScreenSystem(_inputIcons))
-            .Add(new UpdateDeltaTimeSystem(_deltaTimer))
 
             .Add(new CreateCursorSystem())
             .Add(new UpdateCursorPositionSystem(_inputDevices, Window.ClientBounds.Size))

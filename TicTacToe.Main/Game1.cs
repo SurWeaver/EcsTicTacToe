@@ -141,7 +141,7 @@ public class TicTacToeGame : Game
             .Add(new CreateCursorSystem())
             .Add(new UpdateCursorPositionSystem(_inputDevices, Window.ClientBounds.Size))
 
-            .Add(new AssignInputSystem(_inputDevices))
+            .Add(new AssignInputSystem(_inputDevices, Window.ClientBounds.Size))
             .Add(new CleanAssignScreenSystem())
 
             .Add(new AnimateSequentialFrameSystem())

@@ -12,10 +12,10 @@ using TicTacToe.Core.Utils;
 
 namespace TicTacToe.Core.Input.Systems;
 
-public class AssignInputSystem(InputDevices device)
+public class AssignInputSystem(InputDevices device, Point windowSize)
     : IEcsInitSystem, IEcsRunSystem
 {
-    private readonly Rectangle WindowBounds = new(0, 0, 192, 192);
+    private readonly Rectangle WindowBounds = new(Point.Zero, windowSize);
 
     private EcsFilter _filter;
     private EcsFilter _noInputPlayerFilter;

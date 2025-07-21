@@ -1,8 +1,8 @@
 using Leopotam.EcsLite;
 using Surtility.Drawing.Components;
 using Surtility.Extensions;
+using Surtility.Utils;
 using TicTacToe.Core.Animation.Components;
-using TicTacToe.Core.Utils;
 
 namespace TicTacToe.Core.Animation.Systems;
 

@@ -1,18 +1,17 @@
 ﻿using Leopotam.EcsLite;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using Surtility.Cleaning;
 using Surtility.Drawing.Components;
 using Surtility.Drawing.Systems;
 using Surtility.Timing;
 using Surtility.Tools;
-using Surtility.Tweening;
-using Surtility.Tweening.Components;
 using Surtility.Tweening.Systems;
+using Surtility.Utils;
 using TicTacToe.Core.Animation.Components;
 using TicTacToe.Core.Animation.Systems;
 using TicTacToe.Core.Cell.Components;
 using TicTacToe.Core.Cell.Enums;
-using TicTacToe.Core.Cleaning.Systems;
 using TicTacToe.Core.Components;
 using TicTacToe.Core.Drawing.Components;
 using TicTacToe.Core.Drawing.Systems;
@@ -151,7 +150,7 @@ public class TicTacToeGame : Game
 
             .Add(new LoopTweenSystem<Vector2>())
             .Add(new DeleteTweenSystem())
-            .Add(new CleanEventSystem())
+            .Add(new RemoveEntityWithComponentSystem<EventMarker>())
             .Init();
 
         _drawSystems
